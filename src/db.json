@@ -17,6 +17,15 @@
       "email": "maria@silvapinto.com",
       "senha": "asdasdas",
       "ativo": true
+    },
+    {
+      "nome": "VICTOR",
+      "sobrenome": "CANDEIAS",
+      "tipoUsuario": "Usuário padrão",
+      "email": "victorete7@hotmail.com",
+      "senha": "asdasdsa",
+      "ativo": true,
+      "id": 9
     }
   ]
 }
