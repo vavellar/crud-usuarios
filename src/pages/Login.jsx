@@ -6,9 +6,9 @@ function Login() {
     let navigate = useNavigate();
 
     const handleLogin = () => {
-        // Perform login logic here
-        // On successful login, redirect to the dashboard
-        navigate('/dashboard')
+        // lógica do login aqui
+        // em caso de sucesso, redirecionar para página de usuários
+        navigate('/users')
     };
 
     return (
@@ -40,7 +40,13 @@ function Login() {
                         variant="standard"
                         autoComplete="current-password"
                     />
-                    <Button variant="contained" color='warning'>Entrar</Button>
+                    <Button
+                        variant="contained"
+                        color='warning'
+                        onClick={() => handleLogin()}
+                    >
+                        Entrar
+                    </Button>
                 </Box>
             </Container>
         </Box>

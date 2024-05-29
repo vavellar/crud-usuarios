@@ -1,0 +1,22 @@
+{
+  "usuarios": [
+    {
+      "id": 7,
+      "nome": "Cleo",
+      "sobrenome": "Nunes",
+      "tipoUsuario": "Administrador",
+      "email": "nunes@cleo.com.br",
+      "senha": "asdasdas",
+      "ativo": false
+    },
+    {
+      "id": 8,
+      "nome": "Maria",
+      "sobrenome": "Silva Pinto",
+      "tipoUsuario": "Usuário padrão",
+      "email": "maria@silvapinto.com",
+      "senha": "asdasdas",
+      "ativo": true
+    }
+  ]
+}

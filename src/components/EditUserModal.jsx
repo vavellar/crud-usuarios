@@ -10,9 +10,33 @@ import {
     TextField
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, {useState} from "react";
+import {UsersService} from "../services";
 
-function EditUserModal({ isOpen, closeModal, user}) {
+function EditUserModal({ isOpen, closeModal, user, fetchUsers}) {
+    const [ formData, setFormData ] = useState({
+        nome: user.nome,
+        sobrenome: user.sobrenome,
+        tipoUsuario: user.tipoUsuario,
+        email: user.email,
+        senha: user.senha,
+        ativo: user.ativo
+    })
+
+    function handleChange(event) {
+        const { name, value, type, checked } = event.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    }
+
+    async function handleEditUser() {
+        closeModal()
+        await UsersService.editUser(user.id, formData)
+        // setSnackBarIsOpen(true)
+        fetchUsers()
+    }
     return (
         <Dialog
             open={isOpen}
@@ -24,29 +48,33 @@ function EditUserModal({ isOpen, closeModal, user}) {
             </DialogTitle>
             <DialogContent>
                 <Box rowGap={3} display="grid">
-                    <FormGroup>
-                        <FormControlLabel control={<Switch defaultChecked={user.ativo} />} label="Usuário ativo" />
+                    <FormGroup name="ativo">
+                        <FormControlLabel control={<Switch defaultChecked={user.ativo} onChange={handleChange}/>} name="ativo" label="Usuário ativo" />
                     </FormGroup>
                     <FormControl>
                         <FormLabel id="demo-radio-buttons-group-label">Tipo de usuário</FormLabel>
                         <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
                             defaultValue={user.tipoUsuario}
-                            name="radio-buttons-group"
+                            name="tipoUsuario"
                         >
-                            <FormControlLabel value="Administrador" control={<Radio />} label="Administrador" />
-                            <FormControlLabel value="Usuário padrão" control={<Radio />} label="Usuário padrão" />
+                            <FormControlLabel value="Administrador" control={<Radio onChange={handleChange}/>} label="Administrador" />
+                            <FormControlLabel value="Usuário padrão" control={<Radio onChange={handleChange}/>} label="Usuário padrão" />
                         </RadioGroup>
                     </FormControl>
                     <TextField
                         fullWidth
                         label="Nome"
+                        name="nome"
+                        onChange={handleChange}
                         variant="standard"
                         defaultValue={user.nome}
                     />
                     <TextField
                         fullWidth
                         label="Sobrenome"
+                        name="sobrenome"
+                        onChange={handleChange}
                         variant="standard"
                         defaultValue={user.sobrenome}
                     />
@@ -54,6 +82,8 @@ function EditUserModal({ isOpen, closeModal, user}) {
                         fullWidth
                         label="E-mail"
                         variant="standard"
+                        name="email"
+                        onChange={handleChange}
                         type="email"
                         defaultValue={user.email}
                     />
@@ -61,6 +91,8 @@ function EditUserModal({ isOpen, closeModal, user}) {
                         fullWidth
                         label="Senha"
                         type="password"
+                        name="senha"
+                        onChange={handleChange}
                         variant="standard"
                         defaultValue={user.senha}
                     />
@@ -68,7 +100,7 @@ function EditUserModal({ isOpen, closeModal, user}) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => closeModal()}>Cancelar</Button>
-                <Button autoFocus>
+                <Button autoFocus onClick={() => handleEditUser()}>
                     Editar
                 </Button>
             </DialogActions>
